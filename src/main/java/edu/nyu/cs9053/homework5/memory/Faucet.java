@@ -71,7 +71,6 @@ public class Faucet {
         double percentage = ((double) endMemory / (double) total) * 100d;
         FancyOutput.print("%nProcessed ^cyan^%d^r^ water%n", waters.size());
         FancyOutput.print("Ending with ^yellow^%d^r^ MB used memory%n", (endMemory / BYTE_TO_MB));
-        System.out.println(percentage);
         if (percentage > 50d) {
             FancyOutput.print("^red^You've been leaking memory!^r^%n");
         } else {
