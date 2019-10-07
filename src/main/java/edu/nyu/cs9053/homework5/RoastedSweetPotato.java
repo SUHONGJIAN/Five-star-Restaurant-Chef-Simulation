@@ -11,6 +11,6 @@ public class RoastedSweetPotato extends AbstractRecipe implements Recipe {
 
     @Override public void initializeFromOven(Oven oven) {
         this.ovenTemperature = oven.getSetTemperature();
-        remainingSecondsUntilDone = this.ovenTemperature/10 * 60.0;
+        this.remainingSecondsUntilDone = this.ovenTemperature / 10 * 60.0;
     }
 }

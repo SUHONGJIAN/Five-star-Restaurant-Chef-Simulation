@@ -14,28 +14,22 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Faucet {
 
-   private class Drain {
-
-        private void drain(Water water) {
-            water.consume();
-        }
-
-    }
-
-    private class Water {
+    private static class Water {
 
         private final AtomicInteger remaining;
 
-        private Water() {
-            this.remaining = new AtomicInteger(flow.length);
+        private final Random random;
+
+        private Water(int flowLen) {
+            this.remaining = new AtomicInteger(flowLen);
+            this.random = new Random();
         }
 
-        private int consume() {
+        private void consume() {
             int current = remaining.get();
             int consumed = ((int) ((1d / (double) (random.nextInt(4) + 1)) * current)) + 1;
             int remainder = Math.max(0, current - consumed);
             remaining.set(remainder);
-            return consumed;
         }
 
         private boolean dry() {
@@ -48,7 +42,7 @@ public class Faucet {
 
     private static final long BYTE_TO_MB = 1024L * 1024L;
 
-    private final static int MAX_FLOW = 1000;
+    private static final int MAX_FLOW = 1000;
 
     /**
      * Students, do not modify this main method
@@ -77,6 +71,7 @@ public class Faucet {
         double percentage = ((double) endMemory / (double) total) * 100d;
         FancyOutput.print("%nProcessed ^cyan^%d^r^ water%n", waters.size());
         FancyOutput.print("Ending with ^yellow^%d^r^ MB used memory%n", (endMemory / BYTE_TO_MB));
+        System.out.println(percentage);
         if (percentage > 50d) {
             FancyOutput.print("^red^You've been leaking memory!^r^%n");
         } else {
@@ -86,13 +81,10 @@ public class Faucet {
 
     private final Random random;
 
-    private final Drain drain;
-
     private final Object[] flow;
 
     public Faucet(Random random) {
         this.random = random;
-        this.drain = new Drain();
         int initial = random.nextInt(MAX_FLOW) + 1;
         this.flow = new Object[initial];
         for (int i = 0; i < initial; i++) {
@@ -101,11 +93,12 @@ public class Faucet {
     }
 
     public void drain(Water water) {
-        this.drain.drain(water);
+        water.consume();
     }
 
     public Water turnOn() {
-        return new Water();
+        int flowLen = flow.length;
+        return new Water(flowLen);
     }
 
 }

@@ -11,6 +11,6 @@ public class PotRoast extends AbstractRecipe implements Recipe {
 
     @Override public void initializeFromOven(Oven oven) {
         this.ovenTemperature = oven.getSetTemperature();
-        remainingSecondsUntilDone = this.ovenTemperature/5 * 60.0;
+        this.remainingSecondsUntilDone = this.ovenTemperature / 5 * 60.0;
     }
 }
