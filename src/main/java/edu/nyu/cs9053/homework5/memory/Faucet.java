@@ -20,16 +20,17 @@ public class Faucet {
 
         private final Random random;
 
-        private Water(int flowLen) {
+        private Water(int flowLen, Random random) {
             this.remaining = new AtomicInteger(flowLen);
-            this.random = new Random();
+            this.random = random;
         }
 
-        private void consume() {
+        private int consume() {
             int current = remaining.get();
             int consumed = ((int) ((1d / (double) (random.nextInt(4) + 1)) * current)) + 1;
             int remainder = Math.max(0, current - consumed);
             remaining.set(remainder);
+            return consumed;
         }
 
         private boolean dry() {
@@ -80,10 +81,13 @@ public class Faucet {
 
     private final Random random;
 
+    private final Drain drain;
+
     private final Object[] flow;
 
     public Faucet(Random random) {
         this.random = random;
+        this.drain = new Drain();
         int initial = random.nextInt(MAX_FLOW) + 1;
         this.flow = new Object[initial];
         for (int i = 0; i < initial; i++) {
@@ -92,12 +96,13 @@ public class Faucet {
     }
 
     public void drain(Water water) {
+        this.drain.drain(water);
         water.consume();
     }
 
     public Water turnOn() {
         int flowLen = flow.length;
-        return new Water(flowLen);
+        return new Water(flowLen, random);
     }
 
 }

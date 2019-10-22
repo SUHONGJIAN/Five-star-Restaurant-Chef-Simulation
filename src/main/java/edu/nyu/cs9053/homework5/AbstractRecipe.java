@@ -1,17 +1,17 @@
 package edu.nyu.cs9053.homework5;
 
 
-abstract class AbstractRecipe implements Recipe {
+public abstract class AbstractRecipe implements Recipe {
 
     private final int volumeCubicInches;
 
     private static final Double DEFAULT_REMAINING_SECONDS_UNTIL_DONE = -60.0;   //set a non-0 default value to avoid the wrong response of isRecipeDone().
 
-    protected Double remainingSecondsUntilDone;
+    protected AtomicReference<Double> remainingSecondsUntilDone;
 
     protected int ovenTemperature;
 
-    AbstractRecipe(int volumeCubicInches) {
+    protected AbstractRecipe(int volumeCubicInches) {
         this.volumeCubicInches = volumeCubicInches;
         this.remainingSecondsUntilDone = DEFAULT_REMAINING_SECONDS_UNTIL_DONE;
     }
@@ -28,7 +28,7 @@ abstract class AbstractRecipe implements Recipe {
 
     @Override
     public boolean isRecipeDone() {
-        if (remainingSecondsUntilDone == 0.0) return true;
+        if (remainingSecondsUntilDone <= 0.0) return true;
         else return false;
     }
 
