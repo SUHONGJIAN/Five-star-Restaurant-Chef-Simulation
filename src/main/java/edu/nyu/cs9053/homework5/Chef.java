@@ -23,33 +23,24 @@ public class Chef {
         Recipe thirdRecipe = new RoastedSweetPotato();
         Recipe fourthRecipe = new Baguette(0.2);
 
-        boolean preparedRecipe1 = false;
-        boolean preparedRecipe2 = false;
-        boolean preparedRecipe3 = false;
-        boolean preparedRecipe4 = false;
-
-        boolean firstDoneRecipe1 = true;
-        boolean firstDoneRecipe2 = true;
-        boolean firstDoneRecipe3 = true;
-        boolean firstDoneRecipe4 = true;
+        boolean initialFinishRecipe1 = false;
+        boolean initialFinishRecipe2 = false;
+        boolean initialFinishRecipe3 = false;
+        boolean initialFinishRecipe4 = false;
 
         while (true) {
 
-            if (firstRecipe.getRemainingSecondsUntilDone() == -60.0 && !preparedRecipe1) {   //Equaling default value means the recipe has not been put on oven by souschef.
+            if (firstRecipe.getRemainingSecondsUntilDone() == -60.0) {   //Equaling default value means the recipe has not been put on oven by souschef.
                 hongjian.prepareToCook(firstRecipe);
-                preparedRecipe1 = true;
             }
-            else if (firstRecipe.getRemainingSecondsUntilDone() != -60.0 && secondRecipe.getRemainingSecondsUntilDone() == -60.0 && !preparedRecipe2) {
+            else if (firstRecipe.getRemainingSecondsUntilDone() != -60.0 && secondRecipe.getRemainingSecondsUntilDone() == -60.0) {
                 hongjian.prepareToCook(secondRecipe);
-                preparedRecipe2 = true;
             }
-            else if (secondRecipe.getRemainingSecondsUntilDone() != -60.0 && thirdRecipe.getRemainingSecondsUntilDone() == -60.0 && !preparedRecipe3) {
+            else if (secondRecipe.getRemainingSecondsUntilDone() != -60.0 && thirdRecipe.getRemainingSecondsUntilDone() == -60.0) {
                 hongjian.prepareToCook(thirdRecipe);
-                preparedRecipe3 = true;
             }
-            else if (thirdRecipe.getRemainingSecondsUntilDone() != -60.0 && fourthRecipe.getRemainingSecondsUntilDone() == -60.0 && !preparedRecipe4){
+            else if (thirdRecipe.getRemainingSecondsUntilDone() != -60.0 && fourthRecipe.getRemainingSecondsUntilDone() == -60.0){
                 hongjian.prepareToCook(fourthRecipe);
-                preparedRecipe4 = true;
             }
 
             try {
@@ -69,21 +60,21 @@ public class Chef {
                 hongjian.cookInOven(fourthRecipe, false);
             }
 
-            if (firstRecipe.isRecipeDone() && firstDoneRecipe1) {
+            if (firstRecipe.isRecipeDone() && !initialFinishRecipe1) {
                 oven.takeOut(firstRecipe);
-                firstDoneRecipe1 = false;
+                initialFinishRecipe1 = true;
             }
-            if (secondRecipe.isRecipeDone() && firstDoneRecipe2) {
+            if (secondRecipe.isRecipeDone() && !initialFinishRecipe2) {
                 oven.takeOut(secondRecipe);
-                firstDoneRecipe2 = false;
+                initialFinishRecipe2 = true;
             }
-            if (thirdRecipe.isRecipeDone() && firstDoneRecipe3) {
+            if (thirdRecipe.isRecipeDone() && !initialFinishRecipe3) {
                 oven.takeOut(thirdRecipe);
-                firstDoneRecipe3 = false;
+                initialFinishRecipe3 = true;
             }
-            if (fourthRecipe.isRecipeDone() && firstDoneRecipe4) {
+            if (fourthRecipe.isRecipeDone() && !initialFinishRecipe4) {
                 oven.takeOut(fourthRecipe);
-                firstDoneRecipe4 = false;
+                initialFinishRecipe4 = true;
             }
 
             if (firstRecipe.isRecipeDone() && secondRecipe.isRecipeDone() && thirdRecipe.isRecipeDone() && fourthRecipe.isRecipeDone()) break;
