@@ -14,6 +14,14 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Faucet {
 
+    private class Drain {
+
+        private void drain(Water water) {
+            water.consume();
+        }
+
+    }
+
     private static class Water {
 
         private final AtomicInteger remaining;

@@ -95,7 +95,7 @@ public class Chef {
     private void cookInOven(Recipe recipe, boolean initialPutInOven) {
         oven.cook(recipe, new Timer() {
             @Override public void update(Time unit, int value, int ovenTemperature) {
-                if (unit == null || (unit != Time.Minute && unit != Time.Seconds)) {
+                if (unit == null || (unit != Time.Minutes && unit != Time.Seconds)) {
                     throw new IllegalArgumentException();
                 }
                 recipe.adjust(unit, value, ovenTemperature);
